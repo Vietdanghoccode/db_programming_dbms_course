@@ -33,6 +33,17 @@ public class DashboardService {
             .collect(Collectors.toList());
     }
 
+    public List<Map<String, Object>> getTopDebtors() {
+        return customerRepository.getTopDebtors().stream()
+            .map(obj -> {
+                Map<String, Object> map = new HashMap<>();
+                map.put("customer", obj[0] != null ? obj[0] : "Unknown");
+                map.put("debt", obj[1] != null ? obj[1] : 0.0);
+                return map;
+            })
+            .collect(Collectors.toList());
+    }
+
     public List<Map<String, Object>> getRevenueByProduct() {
         return productRepository.getRevenueByProduct().stream()
             .map(obj -> {

@@ -23,6 +23,11 @@ public class DashboardController {
         return dashboardService.getRevenueByCustomer();
     }
 
+    @GetMapping("/stats/top-debtors")
+    public List<Map<String, Object>> getTopDebtors() {
+        return dashboardService.getTopDebtors();
+    }
+
     @GetMapping("/stats/revenue-by-product")
     public List<Map<String, Object>> getRevenueByProduct() {
         return dashboardService.getRevenueByProduct();
