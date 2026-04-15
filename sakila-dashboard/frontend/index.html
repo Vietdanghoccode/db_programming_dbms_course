@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClassicModels Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <h1>Classic<span>Models</span></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li class="active"><a href="#" id="nav-dashboard">Analytics Dashboard</a></li>
+                    <li><a href="#" id="nav-search">Search Explorer</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header>
+                <h2 id="page-title">Analytics Dashboard</h2>
+                <div class="user-profile">Admin Mode</div>
+            </header>
+
+            <section id="dashboard-view" class="view-section active">
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h3>Revenue by Month</h3>
+                        <div style="position: relative; height: 300px; width: 100%;">
+                            <canvas id="monthlyChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Top Customers (Revenue)</h3>
+                        <div style="position: relative; height: 300px; width: 100%;">
+                            <canvas id="customerChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reports-section">
+                    <div class="report-card">
+                        <h3>Product Revenue Pivot</h3>
+                        <div class="table-responsive">
+                            <table class="data-table" id="product-pivot-table">
+                                <thead>
+                                    <tr>
+                                        <th>Product Name</th>
+                                        <th>Total Revenue ($)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Rows via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="search-view" class="view-section">
+                <div class="search-tabs">
+                    <button class="tab-btn active" data-target="customers-search">Customers</button>
+                    <button class="tab-btn" data-target="products-search">Products</button>
+                    <button class="tab-btn" data-target="orders-search">Orders</button>
+                </div>
+
+                <div id="customers-search" class="search-pane active">
+                    <div class="search-container">
+                        <input type="text" id="customer-query" placeholder="Search customer by name...">
+                        <button onclick="searchCustomers()">Search</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead><tr><th>ID</th><th>Name</th><th>City</th><th>Country</th></tr></thead>
+                            <tbody id="customers-results"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="products-search" class="search-pane">
+                    <div class="search-container">
+                        <input type="text" id="product-query" placeholder="Search product by name...">
+                        <button onclick="searchProducts()">Search</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead><tr><th>Code</th><th>Name</th><th>Line</th><th>Stock</th><th>Buy Price ($)</th></tr></thead>
+                            <tbody id="products-results"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="orders-search" class="search-pane">
+                    <div class="search-container">
+                        <input type="date" id="order-start">
+                        <input type="date" id="order-end">
+                        <button onclick="searchOrders()">Search</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead><tr><th>Order #</th><th>Date</th><th>Shipped Date</th><th>Status</th><th>Customer #</th></tr></thead>
+                            <tbody id="orders-results"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Floating Chat Widget -->
+    <div class="chat-widget" id="chat-widget">
+        <div class="chat-header" id="chat-header">
+            <h4>AI Assistant</h4>
+            <button id="close-chat">&times;</button>
+        </div>
+        <div class="chat-body" id="chat-body">
+            <div class="chat-message bot-message">
+                Hello! I am your AI assistant powered by Groq. How can I help you regarding ClassicModels today?
+            </div>
+        </div>
+        <div class="chat-footer">
+            <input type="text" id="chat-input" placeholder="Type your message...">
+            <button id="send-chat-btn">➔</button>
+        </div>
+    </div>
+    <button class="chat-toggle-btn" id="chat-toggle-btn">
+        💬
+    </button>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
