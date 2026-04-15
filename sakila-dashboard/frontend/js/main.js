@@ -50,6 +50,7 @@ function initSearchTabs() {
 
 let monthlyChartInstance = null;
 let customerChartInstance = null;
+let debtorChartInstance = null;
 
 async function loadDashboard() {
     try {
@@ -57,17 +58,19 @@ async function loadDashboard() {
         Chart.defaults.font.family = "'Inter', sans-serif";
 
         // Fetch Data
-        const [monthRes, custRes, prodRes] = await Promise.all([
+        const [monthRes, custRes, prodRes, debtRes] = await Promise.all([
             fetch(`${API_BASE}/stats/revenue-by-month`),
             fetch(`${API_BASE}/stats/revenue-by-customer`),
-            fetch(`${API_BASE}/stats/revenue-by-product`)
+            fetch(`${API_BASE}/stats/revenue-by-product`),
+            fetch(`${API_BASE}/stats/top-debtors`)
         ]);
 
         const monthData = await monthRes.json();
         const custData = await custRes.json();
         const prodData = await prodRes.json();
-
-        // Line Chart for Monthly Revenue
+        const debtData = await debtRes.json();
+        
+        // ... (Monthly Chart)
         const ctxMonthly = document.getElementById('monthlyChart').getContext('2d');
         if(monthlyChartInstance) monthlyChartInstance.destroy();
         monthlyChartInstance = new Chart(ctxMonthly, {
@@ -87,7 +90,7 @@ async function loadDashboard() {
             options: { responsive: true, maintainAspectRatio: false }
         });
 
-        // Bar Chart for Customer Revenue
+        // ... (Revenue by Customer Chart)
         const ctxCust = document.getElementById('customerChart').getContext('2d');
         if(customerChartInstance) customerChartInstance.destroy();
         customerChartInstance = new Chart(ctxCust, {
@@ -98,6 +101,23 @@ async function loadDashboard() {
                     label: 'Revenue ($)',
                     data: custData.map(d => d.total),
                     backgroundColor: '#8b5cf6',
+                    borderRadius: 4
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+        });
+
+        // Bar Chart for Top Debtors
+        const ctxDebt = document.getElementById('debtorsChart').getContext('2d');
+        if(debtorChartInstance) debtorChartInstance.destroy();
+        debtorChartInstance = new Chart(ctxDebt, {
+            type: 'bar',
+            data: {
+                labels: debtData.map(d => d.customer.substring(0, 15)+'...'),
+                datasets: [{
+                    label: 'Outstanding Debt ($)',
+                    data: debtData.map(d => d.debt),
+                    backgroundColor: '#ef4444',
                     borderRadius: 4
                 }]
             },

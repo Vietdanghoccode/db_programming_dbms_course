@@ -97,7 +97,7 @@ header h2 { font-weight: 600; font-size: 2rem; }
 
 .charts-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 2rem;
     margin-bottom: 3rem;
 }
